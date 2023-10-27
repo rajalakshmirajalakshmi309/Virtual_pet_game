@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Game</title>
+    <style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #87CEEB; /* Sky Blue */
+}
+
+
+
+    .status {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+#pet {
+    margin-top: 20px;
+}
+
+#petImg {
+    width: 330px;
+    height: 400px;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em;
+}
+
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Virtual Pet Game</h1>
+    </header>
+<main>
+    <div id="pet">
+        <img id="petImg" src="" alt="">
+    </div>
+    <div class="game-container">
+        <div class="pet" id="pet"></div>
+        <div class="status" id="status"></div>
+        <div class="buttons">
+            <button onclick="feedPet()">Feed</button>
+            <button onclick="playWithPet()">Play</button>
+            <button onclick="sleepPet()">Sleep</button>
+        </div>
+    </div>
+</main>
+
+
+<script>
+
+
+let petStatus = {
+    hunger: 50,
+    happiness: 50,
+    energy: 50
+};
+
+const pet = document.getElementById('pet');
+const status = document.getElementById('status');
+
+function updatePetStatus() {
+    status.innerText = `Hunger: ${petStatus.hunger} | Happiness: ${petStatus.happiness} | Energy: ${petStatus.energy}`;
+
+    // Update pet appearance based on status
+    if (petStatus.hunger > 75 || petStatus.happiness < 25 || petStatus.energy < 25) {
+        petImg.src = 'pet_sad.gif';
+    } else {
+        petImg.src = 'pet_idle.gif';
+    }
+}
+
+function feedPet() {
+    petStatus.hunger -= 10;
+    if (petStatus.hunger < 0) petStatus.hunger = 0;
+
+    petStatus.happiness += 5;
+    if (petStatus.happiness > 100) petStatus.happiness = 100;
+
+    updatePetStatus();
+}
+
+function playWithPet() {
+    petStatus.happiness += 10;
+    if (petStatus.happiness > 100) petStatus.happiness = 100;
+
+    petStatus.energy -= 5;
+    if (petStatus.energy < 0) petStatus.energy = 0;
+
+    updatePetStatus();
+}
+
+function sleepPet() {
+    petStatus.energy += 20;
+    if (petStatus.energy > 100) petStatus.energy = 100;
+
+    petStatus.happiness -= 10;
+    if (petStatus.happiness < 0) petStatus.happiness = 0;
+
+    updatePetStatus();
+}
+
+// Initial update
+updatePetStatus();
+</script>
+</body>
+</html>
